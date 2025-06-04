@@ -10,6 +10,23 @@ import { Tweet } from '../types';
 import { formatDate, formatNumber, truncateAddress } from '../utils/format';
 import WalletConnect from '../components/wallet/WalletConnect';
 
+// Profil resim kalitesini artıran fonksiyon
+const getHighQualityProfileImage = (imageUrl: string) => {
+  if (!imageUrl) return imageUrl;
+  
+  // Twitter profil resmi ise kaliteyi artır
+  if (imageUrl.includes('pbs.twimg.com/profile_images/')) {
+    // _normal veya _bigger'ı kaldır ve yüksek kalite suffix ekle
+    return imageUrl
+      .replace('_normal.jpg', '_400x400.jpg')
+      .replace('_bigger.jpg', '_400x400.jpg')
+      .replace('_normal.png', '_400x400.png')
+      .replace('_bigger.png', '_400x400.png');
+  }
+  
+  return imageUrl;
+};
+
 const Profile = () => {
   const navigate = useNavigate();
   const { user } = useAuthStore();
@@ -90,9 +107,9 @@ const Profile = () => {
         <div className="flex flex-col md:flex-row md:items-center">
           <div className="flex-shrink-0 mb-4 md:mb-0 md:mr-6">
             <img
-              src={user.twitterProfileImage}
+              src={getHighQualityProfileImage(user.twitterProfileImage)}
               alt={user.twitterName}
-              className="w-24 h-24 rounded-full"
+              className="w-24 h-24 rounded-full object-cover"
             />
           </div>
           
