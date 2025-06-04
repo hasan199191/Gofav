@@ -8,7 +8,7 @@
 [[headers]]
   for = "/*"
   [headers.values]
-    Content-Security-Policy = "default-src 'self' 'unsafe-inline' 'unsafe-eval' *.supabase.co *.pexels.com data: blob:; style-src 'self' 'unsafe-inline' fonts.googleapis.com *.gstatic.com; font-src 'self' fonts.gstatic.com *.gstatic.com; script-src 'self' 'unsafe-inline' 'unsafe-eval' 'unsafe-hashes'; img-src 'self' data: *.pexels.com *.supabase.co blob:; connect-src 'self' *.supabase.co api.twitter.com *.huggingface.co; object-src 'none'; base-uri 'self';"
+    Content-Security-Policy = "default-src 'self' 'unsafe-inline' 'unsafe-eval' *.supabase.co *.pexels.com data: blob:; style-src 'self' 'unsafe-inline' fonts.googleapis.com *.gstatic.com; font-src 'self' fonts.gstatic.com *.gstatic.com; script-src 'self' 'unsafe-inline' 'unsafe-eval'; img-src 'self' data: *.pexels.com *.supabase.co *.twimg.com blob:; connect-src 'self' *.supabase.co wss://*.supabase.co api.twitter.com *.huggingface.co"
     X-Frame-Options = "DENY"
     X-Content-Type-Options = "nosniff"
 
@@ -16,17 +16,6 @@
   for = "/assets/*"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
-    Content-Security-Policy = "default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval'"
-
-[[headers]]
-  for = "*.css"
-  [headers.values]
-    Content-Type = "text/css"
-
-[[headers]]
-  for = "*.js"
-  [headers.values]
-    Content-Type = "application/javascript"
 
 [[redirects]]
   from = "/*"
