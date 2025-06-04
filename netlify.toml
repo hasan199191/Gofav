@@ -1,40 +1,13 @@
 [build]
-  command = "npm run build"
   publish = "dist"
+  command = "npm run build"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Content-Security-Policy = "default-src 'self' 'unsafe-inline' 'unsafe-eval' *.supabase.co *.pexels.com data:; style-src 'self' 'unsafe-inline' fonts.googleapis.com; font-src 'self' fonts.gstatic.com; script-src 'self' 'unsafe-inline' 'unsafe-eval'; img-src 'self' data: *.pexels.com *.supabase.co; connect-src 'self' *.supabase.co api.twitter.com *.huggingface.co"
 
 [[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
-  force = true
-
-[build.environment]
-  NODE_VERSION = "20"
-
-[[headers]]
-  for = "/*"
-  [headers.values]
-    X-Frame-Options = "DENY"
-    X-XSS-Protection = "1; mode=block"
-    X-Content-Type-Options = "nosniff"
-    Content-Security-Policy = "default-src 'self' 'unsafe-inline' 'unsafe-eval' *.supabase.co *.pexels.com data:; img-src 'self' data: https:; connect-src 'self' *.supabase.co;"
-
-[[headers]]
-  for = "/assets/*"
-  [headers.values]
-    Cache-Control = "public, max-age=31536000, immutable"
-
-[[headers]]
-  for = "/*.js"
-  [headers.values]
-    Content-Type = "application/javascript"
-
-[[headers]]
-  for = "/*.mjs"
-  [headers.values]
-    Content-Type = "application/javascript"
-
-[[headers]]
-  for = "/*.css"
-  [headers.values]
-    Content-Type = "text/css"
