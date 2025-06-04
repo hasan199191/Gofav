@@ -1,0 +1,29 @@
+{
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "Content-Security-Policy",
+          "value": "default-src 'self' 'unsafe-inline' 'unsafe-eval' *.supabase.co *.pexels.com data: blob:; style-src 'self' 'unsafe-inline' fonts.googleapis.com *.gstatic.com; font-src 'self' fonts.gstatic.com *.gstatic.com; script-src 'self' 'unsafe-inline' 'unsafe-eval'; img-src 'self' data: *.pexels.com *.supabase.co *.twimg.com pbs.twimg.com blob:; connect-src 'self' *.supabase.co wss://*.supabase.co https://*.supabase.co api.twitter.com *.huggingface.co"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        }
+      ]
+    }
+  ],
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist"
+}
