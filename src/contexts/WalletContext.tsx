@@ -33,8 +33,19 @@ export function WalletProvider({ children }: { children: ReactNode }) {
   const [peraWallet, setPeraWallet] = useState<PeraWalletConnect | null>(null);
 
   useEffect(() => {
-    // Initialize Pera Wallet
-    const pera = new PeraWalletConnect();
+    // Initialize Pera Wallet with proper configuration
+    const pera = new PeraWalletConnect({
+      chainId: 416001, // Algorand MainNet
+      shouldShowSignTxnToast: false,
+      network: 'mainnet',
+      metadata: {
+        name: 'GoFav',
+        description: 'SocialFi Platform for Algorand',
+        url: 'https://gofav.vercel.app',
+        icons: ['https://gofav.vercel.app/favicon.ico']
+      }
+    });
+
     setPeraWallet(pera);
 
     // Check if wallet was previously connected
@@ -69,7 +80,10 @@ export function WalletProvider({ children }: { children: ReactNode }) {
   }, [isAuthenticated, user?.walletAddress]);
 
   const connect = async () => {
-    if (!peraWallet) return;
+    if (!peraWallet) {
+      console.error("Pera Wallet not initialized");
+      return;
+    }
     
     try {
       setState({
@@ -78,18 +92,29 @@ export function WalletProvider({ children }: { children: ReactNode }) {
         error: null,
       });
       
-      const accounts = await peraWallet.connect();
+      // Add timeout for connection
+      const connectPromise = peraWallet.connect();
+      const timeoutPromise = new Promise((_, reject) => 
+        setTimeout(() => reject(new Error('Connection timeout')), 30000)
+      );
+      
+      const accounts = await Promise.race([connectPromise, timeoutPromise]) as string[];
       
       if (accounts && accounts.length > 0) {
         // Save wallet address to backend
         if (isAuthenticated) {
-          const response = await profileApi.connectWallet(accounts[0]);
-          
-          if (response.success && response.data && user) {
-            updateUser({
-              ...user,
-              walletAddress: accounts[0],
-            });
+          try {
+            const response = await profileApi.connectWallet(accounts[0]);
+            
+            if (response.success && response.data && user) {
+              updateUser({
+                ...user,
+                walletAddress: accounts[0],
+              });
+            }
+          } catch (apiError) {
+            console.error("Failed to save wallet to backend:", apiError);
+            // Continue with wallet connection even if backend fails
           }
         }
         
@@ -106,7 +131,7 @@ export function WalletProvider({ children }: { children: ReactNode }) {
       setState({
         ...state,
         connecting: false,
-        error: 'Failed to connect wallet',
+        error: error instanceof Error ? error.message : 'Failed to connect wallet',
       });
     }
   };

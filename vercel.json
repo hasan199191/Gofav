@@ -11,7 +11,7 @@
       "headers": [
         {
           "key": "Content-Security-Policy",
-          "value": "default-src 'self' 'unsafe-inline' 'unsafe-eval' *.supabase.co *.pexels.com data: blob:; style-src 'self' 'unsafe-inline' fonts.googleapis.com *.gstatic.com; font-src 'self' fonts.gstatic.com *.gstatic.com; script-src 'self' 'unsafe-inline' 'unsafe-eval'; img-src 'self' data: *.pexels.com *.supabase.co *.twimg.com pbs.twimg.com blob:; connect-src 'self' *.supabase.co wss://*.supabase.co https://*.supabase.co api.twitter.com *.huggingface.co"
+          "value": "default-src 'self' 'unsafe-inline' 'unsafe-eval' *.supabase.co *.pexels.com *.walletconnect.org data: blob:; style-src 'self' 'unsafe-inline' fonts.googleapis.com *.gstatic.com; font-src 'self' fonts.gstatic.com *.gstatic.com; script-src 'self' 'unsafe-inline' 'unsafe-eval'; img-src 'self' data: *.pexels.com *.supabase.co *.twimg.com pbs.twimg.com blob:; connect-src 'self' *.supabase.co wss://*.supabase.co https://*.supabase.co api.twitter.com *.huggingface.co *.walletconnect.org wss://*.walletconnect.org *.perawallet.app"
         },
         {
           "key": "X-Frame-Options",
